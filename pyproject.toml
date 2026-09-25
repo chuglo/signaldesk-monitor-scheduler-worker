@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "signaldesk-monitor-scheduler-worker"
+version = "0.1.0"
+description = "Bounded scheduler for SignalDesk monitor diagnostics."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = ["httpx>=0.27,<1", "pydantic>=2.8,<3", "pydantic-settings>=2.4,<3", "signaldesk-service-kit==0.1.0"]
+
+[tool.uv.sources]
+signaldesk-service-kit = { path = "../signaldesk-service-kit" }
+
+[dependency-groups]
+dev = ["pytest>=8.3,<9"]
+
+[project.scripts]
+signaldesk-monitor-scheduler-worker = "signaldesk_monitor_scheduler_worker.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/signaldesk_monitor_scheduler_worker"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
